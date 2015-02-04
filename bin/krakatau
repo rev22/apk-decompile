@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# set -x
+
+[ -z "$JAVA_HOME" ] && JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-i386/
+export JAVA_HOME
+
+println() {
+    printf "%s\n" "$*"
+}
+
+warn() {
+    println "$0: $*" >&2
+}
+
+die() {
+    warn "$*"
+    exit 1
+}
+
+scriptdir="$(dirname "$0")"
+
+[ -n "$scriptdir" ] || die "Could not locate apkdecompile/bin directory"
+
+srcdir="$( cd "$scriptdir/../Krakatau/" && pwd )"
+
+[ -n "$srcdir" ] || die "Could not locate Krakatau directory in: $scriptdir"
+
+cmd="$1"
+
+[ -n "$cmd" ] || die "Usage: krakatau {decompile|assemble|disassemble}"
+
+shift
+
+case "$cmd" in
+    decompile)    exec python "$srcdir"/decompile.py    "$@"  ;;
+    assemble)	  exec python "$srcdir"/assemble.py     "$@"  ;;
+    disassemble)  exec python "$srcdir"/disassemble.py  "$@"  ;;
+    *) 		  die "Unknown command: $cmd" ;;
+esac
