@@ -1,3 +1,3 @@
 [submodule "Krakatau"]
 	path = Krakatau
-	url = ./Krakatau
+	url = https://github.com/rev22/Krakatau.git
