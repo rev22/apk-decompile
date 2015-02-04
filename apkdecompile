@@ -11,7 +11,7 @@ scriptdir="$(dirname "$0")"
 
 bindir="$( cd "$scriptdir"/bin && pwd )"
 
-[ -n "$scriptdir" ] || die "Could not locate apkdecompile/bin directory"
+[ -n "$bindir" ] || die "Could not locate apkdecompile/bin directory"
 
 krakatau="$bindir"/krakatau
 
@@ -42,5 +42,3 @@ mv "$d"/"$apkd"/classes_dex2jar.jar "$d"/classes.jar
 cd "$d"
 
 "$krakatau" decompile classes.jar
-
-# hello
