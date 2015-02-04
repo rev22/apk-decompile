@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+f="$1"
+d="$2"
+
+scriptdir="$(dirname "$0")"
+
+[ -n "$scriptdir" ] || die "Could not locate apkdecompile directory"
+
+bindir="$( cd "$scriptdir"/bin && pwd )"
+
+[ -n "$scriptdir" ] || die "Could not locate apkdecompile/bin directory"
+
+krakatau="$bindir"/krakatau
+
+if [ -z "$f" ]; then
+    echo "Usage: $0 FILE.apk [output_directory]"
+    echo
+    echo "Decompile apk to output_directory (default is FILE.apk.decompile/)"
+    echo
+    exit 1
+fi
+
+if [ -z "$d" ]; then
+    d="$f".apkdecompile
+fi
+
+apkd=apk.tmp.d
+
+set -x
+
+mkdir "$d"
+
+apktool d -s "$f" "$d"/"$apkd"/
+
+dex2jar "$d"/"$apkd"/classes.dex
+
+mv "$d"/"$apkd"/classes_dex2jar.jar "$d"/classes.jar
+
+cd "$d"
+
+"$krakatau" decompile classes.jar
+
+# hello
