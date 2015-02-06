@@ -1,3 +1,4 @@
 [submodule "Krakatau"]
 	path = Krakatau
 	url = https://github.com/rev22/Krakatau.git
+	branch = apk-decompile

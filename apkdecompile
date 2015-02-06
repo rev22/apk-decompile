@@ -37,8 +37,10 @@ apktool d -s "$f" "$d"/"$apkd"/
 
 dex2jar "$d"/"$apkd"/classes.dex
 
-mv "$d"/"$apkd"/classes_dex2jar.jar "$d"/classes.jar
+mkdir -p "$d"/src
 
-cd "$d"
+mv "$d"/"$apkd"/classes_dex2jar.jar "$d"/src/classes.jar
 
-"$krakatau" decompile classes.jar
+cd "$d"/src
+
+"$krakatau" decompile -keepgoing -shuffle classes.jar
