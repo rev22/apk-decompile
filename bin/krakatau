@@ -32,6 +32,8 @@ cmd="$1"
 
 shift
 
+ulimit -v 120000
+
 case "$cmd" in
     decompile)    exec python "$srcdir"/decompile.py    "$@"  ;;
     assemble)	  exec python "$srcdir"/assemble.py     "$@"  ;;
